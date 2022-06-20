@@ -1,0 +1,10 @@
+name: First theme
+type: theme
+description: Custom first theme
+core: 8.x
+core_version_requirement: ^8 || ^9
+base theme: stable
+
+
+libraries:
+  - first_theme/global

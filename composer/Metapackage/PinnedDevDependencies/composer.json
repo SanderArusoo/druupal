@@ -59,11 +59,8 @@
         "symfony/browser-kit": "v4.4.37",
         "symfony/css-selector": "v4.4.37",
         "symfony/dom-crawler": "v4.4.42",
-        "symfony/filesystem": "v4.4.42",
-        "symfony/finder": "v4.4.41",
         "symfony/lock": "v4.4.40",
         "symfony/phpunit-bridge": "v5.4.8",
-        "theseer/tokenizer": "1.2.1",
-        "webmozart/assert": "1.10.0"
+        "theseer/tokenizer": "1.2.1"
     }
 }

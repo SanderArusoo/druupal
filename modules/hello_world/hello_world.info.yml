@@ -1,0 +1,7 @@
+name: Hello world
+type: module
+description: 'Greeting'
+package: Sample
+core: 8.x
+core_version_requirement: ^8 || ^9
+

@@ -1,0 +1,6 @@
+greeting_sentence:
+   path: /hello/greeting
+   defaults:
+      _controller: Drupal\hello_world\Controller\GreetingController::greeting
+   requirements:
+      _permission: 'access content'
