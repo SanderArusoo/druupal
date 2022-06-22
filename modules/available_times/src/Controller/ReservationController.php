@@ -65,7 +65,6 @@ class ReservationController extends ControllerBase
     return $result;
 
   }
-
 }
 
 
