@@ -1,0 +1,22 @@
+
+<ul>
+  {% for item in items %}
+    {% if item.available == 'FALSE' %}
+      <div class="taken">
+        booked: {{ item.time }} - {{ item.time+1 }}
+      </div>
+    {% else %}
+      <div class="avail">
+        available: {{ item.time }} - {{ item.time+1 }}
+      </div>
+    {% endif %}
+  {% endfor %}
+</ul>
+<style>.avail {
+    background: greenyellow;
+  }
+
+  .taken {
+    background: red;
+  }
+</style>

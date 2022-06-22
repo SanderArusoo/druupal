@@ -1,0 +1,9 @@
+available_times:
+  version: 1.x
+  css:
+    layout:
+      css/available_times.css: {}
+    theme:
+      css/available_times.css: {}
+#  js:
+#    js/cuddly-slider.js: {}
