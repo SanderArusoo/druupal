@@ -1,0 +1,8 @@
+
+reservation.form:
+  path: '/reservations-form'
+  defaults:
+    _title: 'Reservation form'
+    _form:  '\Drupal\available_times\Form\ReservationForm'
+  requirements:
+    _permission: 'access content'
