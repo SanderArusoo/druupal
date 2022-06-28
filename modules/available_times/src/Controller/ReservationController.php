@@ -6,6 +6,7 @@ namespace Drupal\available_times\Controller;
 
 use Drupal\available_times\Services\AvailableTimesService;
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\available_times\Form\ReservationForm;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -54,6 +55,13 @@ class ReservationController extends ControllerBase
       '#theme' => 'available_times_theme',
       '#items' => $times,
     ];
+  }
+  public function reservationForm() {
+
+    $form = \Drupal::formBuilder()
+     ->getForm('\Drupal\available_times\Form\ReservationForm');
+
+    return ['form'=>$form];
   }
   /**
    * Builds the response.

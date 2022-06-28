@@ -40,8 +40,8 @@ class AvailableTimesService{
     $nodeStorage = \Drupal::entityTypeManager()->getStorage('node');
     $reservationIds = $nodeStorage->getQuery()
       ->condition('type', 'reser')
-      ->condition('field_start_date', '2022-06-17T00:00:00', '>')
-      ->condition('field_start_date', '2022-06-17T23:59:59', '<')
+      ->condition('field_start_date', date('Y-m-d') . 'T00:00:00', '>')
+      ->condition('field_start_date', date('Y-m-d') . 'T23:59:59', '<')
       ->condition('field_confirmed', 1)
       ->execute();
     $availTimes = self::AVAILABLE_TIMES;
