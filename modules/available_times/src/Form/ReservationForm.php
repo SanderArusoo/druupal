@@ -13,6 +13,8 @@ use Drupal\Core\Datetime\DrupalDateTime;
 class ReservationForm extends FormBase
 {
 
+  public function __construct()
+  {}
 
   /**
    * {@inheritdoc}
