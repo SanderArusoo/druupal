@@ -12,6 +12,8 @@ use Drupal\Core\Datetime\DrupalDateTime;
 
 class ReservationForm extends FormBase
 {
+
+
   /**
    * {@inheritdoc}
    */
@@ -23,6 +25,8 @@ class ReservationForm extends FormBase
   public function buildForm(array $form, FormStateInterface $form_state)
   {
     /*** @var AvailableTimesService $AvailableTimesService */
+
+    // TODO: use dependency injection
     $AvailableTimesService = \Drupal::service(AvailableTimesService::SERVICE_ID);
     $availTimes = $AvailableTimesService->availTimes();
 
@@ -70,6 +74,7 @@ class ReservationForm extends FormBase
       '#type' => 'radios',
       '#title' => ('Open start time'),
       '#options' => $formattedTimes,
+      '#required' => TRUE,
     );
     $form['field_confirmed'] = array (
       '#type' => 'checkbox',
@@ -89,29 +94,48 @@ class ReservationForm extends FormBase
 
   public function submitForm(array &$form, FormStateInterface $form_state)
   {
+
+    $reservationTime = $form_state->getValue('start_time');
+    $contactName = $form_state->getValue('contact_name');
+    $contactEmail = $form_state->getValue('field_contact_email');
+
+    $dateTimeWithZone = new DrupalDateTime($form_state->getValue('start_time'));
+    $dateTimeWithZone->setTimezone(new \DateTimeZone('UTC'));
+    $dateTimeWithZone = $dateTimeWithZone->format('Y-m-d\TH:i:s');
+
+
     $this->messenger()->addStatus($this->t('Reservation created!'));
-    $this->messenger()->addStatus(($this->t('Reserveeringu aeg on @date', [
-      '@date' => $form_state->getValue('start_time')])));
-    $this->messenger()->addStatus(($this->t('Kontakti nimi on @name', [
-      '@name' => $form_state->getValue('contact_name')])));
-    $this->messenger()->addStatus(($this->t('Kontakti email on @email', [
-      '@email' => $form_state->getValue('field_contact_email')])));
+
+    $this->messenger()->addStatus(($this->t('Reservation time is: @date', [
+      '@date' => $reservationTime,])));
+
+    $this->messenger()->addStatus(($this->t('Contact name is:  @name', [
+      '@name' => $contactName,])));
+
+
+    $this->messenger()->addStatus(($this->t('Contact email is:  @email', [
+      '@email' => $contactEmail,])));
+
+
     /**
      * add Node
      */
     $node = Node::create(['type' => 'reser']);
     //'reser' -machine name
-    $node->setTitle($form_state->getValue('contact_name'));
-    $node->set('field_contact_email',$form_state->getValue('field_contact_email'));
-    $dateTimeWithZone = new DrupalDateTime($form_state->getValue('start_time'));
-    $dateTimeWithZone->setTimezone(new \DateTimeZone('UTC'));
-    $dateTimeWithZone = $dateTimeWithZone->format('Y-m-d\TH:i:s');
+    $node->setTitle($contactName);
+    $node->set('field_contact_email',$contactEmail);
+
+
+
     $node->set('field_start_date', $dateTimeWithZone);
     $node->set('field_confirmed', 1);
     $node->save();
+
+    $availableTimesService= new AvailableTimesService();
+    $availableTimesService->sendEmail($reservationTime, $contactName, $contactEmail);
+
     $url = \Drupal\Core\Url::fromUri('https://drupal.ddev.site/');
     $form_state->setRedirectUrl($url);
     }
-
 
 }

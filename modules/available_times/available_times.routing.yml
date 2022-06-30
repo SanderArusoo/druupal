@@ -1,7 +1,7 @@
 
 
 reservation.reservations:
-  path: /reservations-list
+  path: '/reservations-list'
   defaults:
     _controller: '\Drupal\available_times\Controller\ReservationController::showAvailableTimes'
     _title: 'Reservations'
@@ -15,5 +15,14 @@ reservation.form:
     _title: 'Updated'
   requirements:
     _permission: 'access content'
+
+
+#reservation.email:
+#  path: '/reservations-email'
+#  defaults:
+#    _controller: '\Drupal\available_times\Controller\ReservationController::sendEmail'
+#    _title: 'Email'
+#  requirements:
+#    _permission: 'access content'
 
 

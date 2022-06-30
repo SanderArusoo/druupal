@@ -18,7 +18,8 @@
         "drupal/easy_install": "^10.5",
         "drupal/admin_toolbar": "^3.1",
         "drupal/mimemail": "^1.0@alpha",
-        "drupal/devel": "^4.1"
+        "drupal/devel": "^4.1",
+        "drupal/maillog": "^1.0@beta"
     },
     "require-dev": {
         "behat/mink": "^1.8",
