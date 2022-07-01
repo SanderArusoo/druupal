@@ -40,40 +40,44 @@ class AvailableTimesService{
       } else {
         $result = 'FALSE';
       }
-      $times[$key] = ['time' => $key, 'available' => $result];
+      $availTimes[$key] = ['time' => $key, 'available' => $result];
     }
     return $availTimes;
+
   }
-
-  public function getAvailTimes(): array {
-
-    // TODO: use dependency injection
-    $nodeStorage = \Drupal::entityTypeManager()->getStorage('node');
-    $reservationIds = $nodeStorage->getQuery()
-      ->condition('type', 'reser')
-      ->condition('field_start_date', date('Y-m-d') . 'T00:00:00', '>')
-      ->condition('field_start_date', date('Y-m-d') . 'T23:59:59', '<')
-      ->condition('field_confirmed', 1)
-      ->execute();
-    $availTimes = self::AVAILABLE_TIMES;
-
-    foreach ($reservationIds as $reservationId) {
+    public function getAvailTimes(): array
+    {
 
       // TODO: use dependency injection
-      /*** @var \Drupal\node\NodeInterface $reservation */
-      $reservation = $nodeStorage->load($reservationId);
+      $nodeStorage = \Drupal::entityTypeManager()->getStorage('node');
+      $reservationIds = $nodeStorage->getQuery()
+        ->condition('type', 'reser')
+        ->condition('field_start_date', date('Y-m-d') . 'T00:00:00', '>')
+        ->condition('field_start_date', date('Y-m-d') . 'T23:59:59', '<')
+        ->condition('field_confirmed', 1)
+        ->execute();
+      $availTimes = self::AVAILABLE_TIMES;
 
-      $date_original = new DrupalDateTime($reservation->field_start_date->value, 'UTC');
+      foreach ($reservationIds as $reservationId) {
 
-      // TODO: use dependency injection
-      $dateTime = \Drupal::service('date.formatter')
-        ->format($date_original->getTimestamp(), 'custom', 'Y-m-d H:i:s');
-      $reservationHour = (new \DateTime($dateTime))->format('G');
-      $availTimes[$reservationHour] = FALSE;
+
+        /*** @var \Drupal\node\NodeInterface $reservation */
+        $reservation = $nodeStorage->load($reservationId);
+
+        $date_original = new DrupalDateTime($reservation->field_start_date->value, 'UTC');
+
+        // TODO: use dependency injection
+        $dateTime = \Drupal::service('date.formatter')
+          ->format($date_original->getTimestamp(), 'custom', 'Y-m-d H:i:s');
+        $reservationHour = (new \DateTime($dateTime))->format('G');
+        $availTimes[$reservationHour] = FALSE;
+      }
+      return $availTimes;
     }
-    return $availTimes;
-  }
-  public function sendEmail($reservationTime,$contactName,$contactEmail) {
+
+
+  public function sendEmail($reservationTime,$contactName,$contactEmail)
+  {
 
 // TODO: use dependency injection
     $mailManager = \Drupal::service('plugin.manager.mail');
@@ -91,7 +95,7 @@ class AvailableTimesService{
     return [
 
     ];
+
+
   }
-
-
 }

@@ -9,9 +9,9 @@ reservation.reservations:
     _permission: 'access content'
 
 reservation.form:
-  path: /reservations-updated
+  path: '/reservations-updated'
   defaults:
-    _controller: '\Drupal\available_times\Controller\ReservationController::reservationForm'
+    _controller: '\Drupal\available_times\Controller\ReservationController::ReservationForm'
     _title: 'Updated'
   requirements:
     _permission: 'access content'

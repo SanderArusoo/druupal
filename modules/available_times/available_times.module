@@ -2,11 +2,12 @@
 
 /**
  * @file
- * Primary module hooks for Reservation module.
+ * Primary module hooks for available_times module.
  */
 
-use Drupal\Core\Render\Element;
-use Drupal\user\UserInterface;
+//use Drupal\Core\Render\Element;
+//use Drupal\user\UserInterface;
+//use Drupal\available_times\Entity\;
 
 
 /**
@@ -23,13 +24,13 @@ function available_times_theme($existing, $type, $theme, $path)
     ],
   ];
 }
-function reservation_mail_theme() {
+function available_times_mail_theme() {
   return [
     'reservation_mail' => [
       'render element' => 'elements',
       'base hook' => [
         'variables' => [
-          'module' => 'reservation',
+          'module' => 'available_times',
           'key' => '',
           'recipient' => 'contact_name',
           'subject' => 'Reservation confirmation',
@@ -45,16 +46,16 @@ function reservation_mail_theme() {
 /**
  * Implements hook_mail().
  */
-function reservation_mail($key, $message, $params) {
+function available_times_mail($key, $message, $params) {
+
 //   The $params array holds the values entered on the ExampleForm, stored
 //   with the same structure as the $form array. We need to copy these values
 //   to the appropriate place in the $message so that they get used when
 //   sending the email.
-
-   $message['from'] = isset($params['headers']['From']) ? $params['headers']['From'] : NULL;
+   //$message['from'] = isset($params['headers']['From']) ? $params['headers']['From'] : NULL;
 
   $message['subject'] = t('Reservation confirmation');
-  $message['body'][] = t('Lugupeetud '.$params['contact_name']. ',\n
-   Teie reserveering on kinnitatud!\n
+  $message['body'][] = t('Lugupeetud '.$params['contact_name']. ',
+   Teie reserveering on kinnitatud!
    Reserveeringu aeg on: '.$params['reservation_time']);
 }

@@ -1,3 +1,4 @@
 services:
   available_times.display_times:
     class: Drupal\available_times\Services\AvailableTimesService
+    arguments: ['@entity_type.manager','@date.formatter','@plugin.manager.mail']

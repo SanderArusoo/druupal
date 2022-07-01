@@ -13,8 +13,6 @@ use Drupal\Core\Datetime\DrupalDateTime;
 class ReservationForm extends FormBase
 {
 
-  public function __construct()
-  {}
 
   /**
    * {@inheritdoc}
@@ -30,7 +28,8 @@ class ReservationForm extends FormBase
 
     // TODO: use dependency injection
     $AvailableTimesService = \Drupal::service(AvailableTimesService::SERVICE_ID);
-    $availTimes = $AvailableTimesService->availTimes();
+
+    $availTimes = $AvailableTimesService->getAvailTimes();
 
     foreach ($availTimes as $time => $bool) {
       if (!$bool) {
@@ -41,23 +40,17 @@ class ReservationForm extends FormBase
         $formattedTime = date('Y-m-d H:i:s', $formattedTime);
         $formattedTimes[$formattedTime] = $formattedTime;
 
-
-        //$availTimes[$time] = $time;
+       //$availTimes[$time] = $time;
 
       }
     }
 
     $form['contact_name'] = array(
       '#type' => 'textfield',
-      '#title' => t('contact_name:'),
+      '#title' => t('Nimi:'),
       '#required' => TRUE,
     );
 
-//    $form['body'] = array(
-//      '#type' => 'textfield',
-//      '#title' => t('body:'),
-//      '#required' => FALSE,
-//    );
     $form['field_contact_email'] = array(
       '#type' => 'email',
       '#title' => t('Email:'),

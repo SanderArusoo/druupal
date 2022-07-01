@@ -22,7 +22,7 @@ class ReservationController extends ControllerBase
 
     // TODO: use dependency injection
     $AvailableTimesService = \Drupal::service(AvailableTimesService::SERVICE_ID);
-    $availTimes = $AvailableTimesService->availTimes();
+    $times = $AvailableTimesService->availTimes();
 //    foreach ($availTimes as $key => $value) {
 //      if ($value) {
 //        $result = 'TRUE';
@@ -35,7 +35,7 @@ class ReservationController extends ControllerBase
 
     return [
       '#theme' => 'reservation_list',
-      '#items' => $availTimes,
+      '#items' => $times,
       '#attached'=>['library'=>['available_times/reservation_list']]
     ];
 
